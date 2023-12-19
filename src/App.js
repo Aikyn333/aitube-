@@ -18,11 +18,12 @@ function App() {
     // Состояние для списка избранных фильмов, загруженных из локального хранилища
 
   const [watchList, setWatchList] = useState(JSON.parse(localStorage.getItem('watchList')) || []);
-
+ 
   return (
     <div className='App'>
       <BrowserRouter>
         <Navbar setShowSearch={setShowSearch} watchList={watchList} />
+        <Search showSearch={showSearch} setShowSearch={setShowSearch} setCurrentPage={setCurrentPage} />
         <Routes>
 
           <Route path='/' element={<Home setWatchList={setWatchList} watchList={watchList} />} />
