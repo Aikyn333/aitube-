@@ -13,7 +13,7 @@ const MovieCard = ({ movie, setWatchList, watchList }) => {
     if (watchListIds.includes(movie.imdbID)) {
       alert('Movie already added to your watchlist'); // Отображаем предупреждение, если фильм уже добавлен
     } else {
-      setWatchList([...watchList, movie]); // Добавляем фильм в список  спред ...
+      setWatchList([...watchList, movie]); // Добавляем фильм в список  оператор spread ...
     }
   };
 

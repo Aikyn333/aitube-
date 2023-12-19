@@ -2,6 +2,7 @@ import React from 'react';
 import './style.css';
 
 const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
+  // Создание массива страниц от 1 до totalPages
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -10,6 +11,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
   return (
     <div className='pagination'>
       <ul className='pagination-list'>
+        {/* Кнопка для перехода на предыдущую страницу */}
         <li className='pagination-item'>
           <button
             className={
@@ -23,6 +25,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
             Prev
           </button>
         </li>
+        {/* Отображение страниц в пагинации */}
         {pages.slice(0, 4).map((page) => (
           <li key={page} className='pagination-item'>
             <button
@@ -36,6 +39,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
             </button>
           </li>
         ))}
+        {/* Кнопка для перехода на следующую страницу */}
         <li className='pagination-item'>
           <button
             className={

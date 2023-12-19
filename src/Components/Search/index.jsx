@@ -1,58 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import MovieCard from '../MovieCard';
 import './style.css';
 
-const Search = ({ showSearch, setShowSearch, setCurrentPage }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const searchPage = useNavigate();
-
-  const sendSearchQuery = (e) => {
-    e.preventDefault();
-    if (searchQuery === '') {
-      alert('Please enter a search query');
-    }
-    else {
-      searchPage(`/search/${searchQuery}`);
-      setShowSearch(false);
-      setCurrentPage(1);
-      setSearchQuery('');
-    }
+const TopMovies = ({ filterCtg, setFilterCtg, topMovies, setWatchList, watchList }) => {
+  
+  // Функция обработчик клика по кнопкам категорий
+  const handleFilterCtg = (e) => {
+    setFilterCtg(e.target.textContent);
   };
 
-  const hideShowSearch = (e) => {
-    e.preventDefault();
-    if(e.target.className === 'search-container show') {
-      setShowSearch(prev => false);
-    }
-    return;
-  }
-
-  useEffect(() => {
-    if(showSearch) {
-      document.body.style = 'overflow: hidden';
-    }
-
-    return () => {
-      document.body.style = 'overflow: auto';
-    }
-  }, [showSearch]);
-
   return (
-    <div className={showSearch ? 'search-container show' : 'search-container'} onClick={(e) => hideShowSearch(e)}>
-      <form>
-        <input
-          type='text'
-          placeholder='Search'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          autoFocus
-        />
-        <button className='link btn search-btn' onClick={(e) => sendSearchQuery(e)}>
-          <i className='ri-search-line'></i>
-        </button>
-      </form>
-    </div>
+    <section className='new-sec top-rated-sec' id='movies'>
+      <div className='container'>
+        
+        {/* Заголовок раздела */}
+        <div className='section-title'>
+          <h5 className='sub-title'>ONLINE STREAMING</h5>
+          <h2 className='title'>Top Rated Movies</h2>
+        </div>
+        
+        {/* Кнопки фильтрации по категориям */}
+        <div className='btns-div categories-btns'>
+          {['Action', 'Comedy', 'Western', 'Horror'].map(category => (
+            <button
+              key={category}
+              className={
+                filterCtg === category
+                  ? 'btn category-btn active'
+                  : 'btn category-btn'
+              }
+              onClick={(e) => handleFilterCtg(e)}>
+              {category}
+            </button>
+          ))}
+        </div>
+        
+        {/* Отображение фильмов */}
+        <div className='row movies-grid'>
+          {
+            topMovies
+            ? topMovies.map(movie => (
+                <MovieCard 
+                  movie={movie} 
+                  key={movie.imdbID} 
+                  setWatchList={setWatchList} 
+                  watchList={watchList} 
+                />
+              ))
+            : null
+          }
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default Search;
+export default TopMovies;
